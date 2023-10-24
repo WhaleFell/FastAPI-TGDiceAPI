@@ -6,7 +6,7 @@ A FastAPI Application use to crud `TGBotDiceNodeJS` Mysql.
 
 ```shell
 docker run -d --name=TGDiceAPI \
--v /wfwork/FastAPI-TGMonitor/:/app/ \
+-v /wfwork/FastAPI-TGDiceAPI:/app/ \
 -e PORT="80" \
 -e APP_MODULE="app.main:app" \
 -e DATABASE_URI="mysql+aiomysql://root:lovehyy@mariadb/tgbotdice?charset=utf8mb4" \
