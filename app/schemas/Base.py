@@ -72,8 +72,9 @@ class UserWinLose(BaseModel):
     number: str = Field(description="开奖结果")
     result: str = Field(description="开奖结果")
     amount: float = Field(description="下注金额")
+    win_amount: float = Field(description="输赢")
 
-    @field_validator("amount", mode="after")
+    @field_validator("amount", "win_amount", mode="after")
     @classmethod
     def double(cls, v: float) -> float:
         return round(v, 2)

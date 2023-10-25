@@ -67,7 +67,8 @@ SELECT b.time, b.telegramid, u.name, b.guess, b.resultid,
            CASE WHEN r.shunzi = 1 THEN '顺子 ' ELSE '' END,
            CASE WHEN r.duizi = 1 THEN '对子 ' ELSE '' END
        ) AS result,
-       b.amount
+       b.amount,
+			 b.result - b.amount AS winning_amount
 FROM bet b
 JOIN result r ON b.resultid = r.id
 JOIN users u ON b.telegramid = u.telegramid
@@ -120,7 +121,17 @@ async def get_win_lose(
     datas = result.fetchall()
 
     lst: List[UserWinLose] = []
-    for time, telegramid, tgname, guess, order, number, res, amount in datas:
+    for (
+        time,
+        telegramid,
+        tgname,
+        guess,
+        order,
+        number,
+        res,
+        amount,
+        win_amount,
+    ) in datas:
         lst.append(
             UserWinLose(
                 time=datetime.strptime(time, "%Y-%m-%d %H:%M:%S"),
@@ -131,6 +142,7 @@ async def get_win_lose(
                 number=number,
                 result=res,
                 amount=amount,
+                win_amount=win_amount,
             )
         )
 
